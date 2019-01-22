@@ -86,6 +86,16 @@ export function createUser(user, token, inviteId) {
     };
 }
 
+export function createLTIUser(data) {
+    return bindClientFunc(
+        Client4.createLTIUser,
+        UserTypes.CREATE_LTI_USER_REQUEST,
+        UserTypes.CREATE_LTI_USER_SUCCESS,
+        UserTypes.CREATE_LTI_USER_FAILURE,
+        data,
+    );
+}
+
 export function login(loginId, password, mfaToken = '', ldapOnly = false) {
     return async (dispatch, getState) => {
         dispatch({type: UserTypes.LOGIN_REQUEST}, getState);
