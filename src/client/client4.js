@@ -94,6 +94,10 @@ export default class Client4 {
         return `${this.url}${this.urlVersion}`;
     }
 
+    getLTIRoute() {
+        return `${this.getBaseRoute()}/lti`;
+    }
+
     getUsersRoute() {
         return `${this.getBaseRoute()}/users`;
     }
@@ -300,6 +304,13 @@ export default class Client4 {
             {method: 'post', body: JSON.stringify(user)}
         );
     }
+
+    createLTIUser = async (data) => {
+        return this.doFetch(
+            `${this.getLTIRoute()}/signup`,
+            {method: 'post', body: JSON.stringify(data)}
+        );
+    };
 
     patchMe = async (userPatch) => {
         return this.doFetch(
