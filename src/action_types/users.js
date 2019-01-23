@@ -9,6 +9,10 @@ export default keyMirror({
     CREATE_USER_SUCCESS: null,
     CREATE_USER_FAILURE: null,
 
+    CREATE_LTI_USER_REQUEST: null,
+    CREATE_LTI_USER_SUCCESS: null,
+    CREATE_LTI_USER_FAILURE: null,
+
     LOGIN_REQUEST: null,
     LOGIN_SUCCESS: null,
     LOGIN_FAILURE: null,

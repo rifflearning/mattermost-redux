@@ -288,6 +288,16 @@ function create(state: RequestStatusType = initialRequestState(), action: Generi
     );
 }
 
+function createLTIUser(state: RequestStatusType = initialRequestState(), action: GenericAction): RequestStatusType {
+    return handleRequest(
+        UserTypes.CREATE_LTI_USER_REQUEST,
+        UserTypes.CREATE_LTI_USER_SUCCESS,
+        UserTypes.CREATE_LTI_USER_FAILURE,
+        state,
+        action
+    );
+}
+
 function verifyEmail(state: RequestStatusType = initialRequestState(), action: GenericAction): RequestStatusType {
     return handleRequest(
         UserTypes.VERIFY_EMAIL_REQUEST,
@@ -404,6 +414,7 @@ export default combineReducers({
     login,
     logout,
     create,
+    createLTIUser,
     getProfiles,
     getProfilesInTeam,
     getProfilesNotInTeam,
