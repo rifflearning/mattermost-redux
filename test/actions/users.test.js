@@ -47,6 +47,25 @@ describe('Actions.Users', () => {
         assert.ok(profiles[user.id]);
     });
 
+    it('createLTIUser', async () => {
+        if (TestHelper.isLiveServer()) {
+            console.log('Skipping mock-only test');
+            return;
+        }
+
+        const userToCreate = TestHelper.fakeUser();
+        nock(Client4.getLTIRoute()).
+            post('/signup').
+            reply(200, OK_RESPONSE);
+
+        await Actions.createUser(userToCreate)(store.dispatch, store.getState);
+
+        const request = store.getState().requests.users.getTermsOfService;
+        if (request.status === RequestStatus.FAILURE) {
+            throw new Error(JSON.stringify(request.error));
+        }
+    });
+
     it('login', async () => {
         const user = TestHelper.basicUser;
 
