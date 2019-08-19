@@ -84,7 +84,11 @@ export type UsersRequestsStatuses = {|
     autocompleteUsers: RequestStatusType,
     searchProfiles: RequestStatusType,
     updateMe: RequestStatusType,
-    getTotalUsersStats: RequestStatusType
+    getTotalUsersStats: RequestStatusType,
+
+    // An object containing multiple RequestStatusTypes,
+    // under the key of the dataset that was initially requested
+    getUserAnalytics: Object,
 |};
 
 export type PreferencesRequestsStatuses = {|

@@ -153,6 +153,10 @@ export default keyMirror({
     ENABLE_USER_ACCESS_TOKEN_SUCCESS: null,
     ENABLE_USER_ACCESS_TOKEN_FAILURE: null,
 
+    GET_USER_ANALYTICS_REQUEST: null,
+    GET_USER_ANALYTICS_SUCCESS: null,
+    GET_USER_ANALYTICS_FAILURE: null,
+
     RECEIVED_ME: null,
     RECEIVED_PROFILE: null,
     RECEIVED_PROFILES: null,
@@ -184,4 +188,5 @@ export default keyMirror({
     DISABLED_USER_ACCESS_TOKEN: null,
     ENABLED_USER_ACCESS_TOKEN: null,
     RECEIVED_USER_STATS: null,
+    RECEIVED_USER_ANALYTICS: null,
 });
