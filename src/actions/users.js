@@ -1554,6 +1554,52 @@ export function clearUserAccessTokens() {
     };
 }
 
+/**
+ * Send a getUserAnalytics request for a user (userId) and team id (teamId)
+ * Pass a string indicating which dataset to return (name)
+ *
+ * Can potentially dispatch 4 action types
+ *     1. GET_USER_ANALYTICS_REQUEST
+ *        - sets requests.users.getUserAnalytics[name].status to 'started'
+ *     2. GET_USER_ANALYTICS_FAILURE
+ *        - sets requests.users.getUserAnalytics[name].status to 'failure'
+ *        - sets requests.users.getUserAnalytics[name].error to error from server
+ *     3. GET_USER_ANALYTICS_SUCCESS
+ *        - sets requests.users.getUserAnalytics[name].status to 'success'
+ *     4. RECEIVED_USER_ANALYTICS
+ *        - adds user analytics data returned to entitites.users.analytics
+ *
+ * @param {string} userId - The target user for the requested analytics
+ * @param {string} teamId - The target team for the requested analytics
+ * @param {string} name - The name of the type of analytic data to return
+ *
+ * @returns {AsyncThunk<object>} that resolves with the requested analytics
+ */
+export function getUserAnalytics(userId, teamId, name) {
+    return async (dispatch, getState) => {
+        dispatch({type: UserTypes.GET_USER_ANALYTICS_REQUEST, data: {name}}, getState);
+        let data;
+
+        try {
+            data = await Client4.getUserAnalytics(userId, teamId, name);
+        } catch (error) {
+            forceLogoutIfNecessary(error, dispatch, getState);
+            dispatch(batchActions([
+                {type: UserTypes.GET_USER_ANALYTICS_FAILURE, data: {name}, error},
+                logError(error),
+            ]), getState);
+            return {error};
+        }
+
+        const actions = [{type: UserTypes.GET_USER_ANALYTICS_SUCCESS, data: {name}}];
+        actions.push({type: UserTypes.RECEIVED_USER_ANALYTICS, data: {name, data}});
+
+        dispatch(batchActions(actions), getState);
+
+        return {data};
+    };
+}
+
 export default {
     checkMfa,
     generateMfaSecret,
@@ -1601,4 +1647,5 @@ export default {
     revokeUserAccessToken,
     disableUserAccessToken,
     enableUserAccessToken,
+    getUserAnalytics,
 };

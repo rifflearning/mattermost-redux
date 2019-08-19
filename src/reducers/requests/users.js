@@ -148,6 +148,57 @@ function getUser(state: RequestStatusType = initialRequestState(), action: Gener
     );
 }
 
+/* ******************************************************************************
+ * getUserAnalytics                                                        */ /**
+ *
+ * Reducer for getUserAnalytics. Because the getUserAnalytics is parameterized
+ * by a name which determines what is actually being requested and returned,
+ * the status for the particular named analytics needs to be tracked.
+ *
+ * The request state is in a property with the analytic's name as the key, and
+ * that is why the initial state is an empty object instead of initialRequestState()
+ *
+ * @example
+ * if you request the name 'UserInteractions', and it succeeds, the state will
+ * look as follows:
+ * getUserAnalytics: {
+ *    UserInteractions: {
+ *        status: success,
+ *        error: null,
+ *    }
+ * }
+ *
+ * @param {object} state - containing RequestStatusType objects for every user analytics request
+ * @param {GenericAction} action - containing data for each action
+ *
+ * @returns {object} containing the new requests.users.getUserAnalytics state
+ */
+function getUserAnalytics(state: Object = {}, action: GenericAction): Object {
+    const HANDLED_ACTION_TYPES = [
+        UserTypes.GET_USER_ANALYTICS_REQUEST,
+        UserTypes.GET_USER_ANALYTICS_SUCCESS,
+        UserTypes.GET_USER_ANALYTICS_FAILURE,
+    ];
+
+    // We only want to create request state if the action is a GET_USER_ANALYTICS request action
+    // so we check for an action type we want to handle up front.
+    if (!HANDLED_ACTION_TYPES.some((type) => type === action.type)) {
+        return state;
+    }
+
+    // Use the standard handleRequest helper to update the named analytics request state
+    // property.
+    const curUserAnalyticsNameState = state[action.data.name] || initialRequestState();
+    return {
+        ...state,
+        [action.data.name]: handleRequest(
+            ...HANDLED_ACTION_TYPES,
+            curUserAnalyticsNameState,
+            action
+        ),
+    };
+}
+
 function getUserByUsername(state: RequestStatusType = initialRequestState(), action: GenericAction): RequestStatusType {
     return handleRequest(
         UserTypes.USER_BY_USERNAME_REQUEST,
@@ -422,6 +473,7 @@ export default combineReducers({
     getProfilesInChannel,
     getProfilesNotInChannel,
     getUser,
+    getUserAnalytics,
     getUserByUsername,
     getStatusesByIds,
     getStatus,

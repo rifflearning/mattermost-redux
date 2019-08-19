@@ -69,7 +69,7 @@ export default {
             mentionHighlightBg: '#fdff8e',
             mentionHighlightLink: '#0f758e',
             mentionBg: '#fbfbfb',
-            codeTheme: 'github'
+            codeTheme: 'github',
         },
         mattermost: {
             type: 'Mattermost',
