@@ -16,6 +16,7 @@
     "harmony-reflect": "1.6.0",
     "isomorphic-fetch": "2.2.1",
     "mime-db": "1.33.0",
+    "nyc": "^14.1.1",
     "redux": "4.0.0",
     "redux-action-buffer": "1.2.0",
     "redux-batched-actions": "0.3.0",
@@ -74,6 +75,7 @@
     "flow": "flow",
     "flow-typed": "flow-typed",
     "test": "NODE_ENV=test mocha --opts test/mocha.opts",
+    "test:coverage": "NODE_ENV=test nyc --reporter=text mocha --opts test/mocha.opts",
     "prepare": "npm run build"
   }
 }

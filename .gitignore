@@ -42,3 +42,7 @@ mattermost-redux-*.tgz
 # flow
 /flow-typed
 /.flowinstall
+
+# test coverage
+coverage/
+.nyc_output/
