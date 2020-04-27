@@ -72,6 +72,38 @@ function removeProfileFromSet(state, action) {
     };
 }
 
+/**
+ * This reducer manipulates the entities.users.analytics object in the store
+ * It handles 2 actions:
+ *     1. RECEIVED_USER_ANALYTICS
+ *        - user analytics data was just received, add it to the analytics object
+ *     2. LOGOUT_SUCCESS
+ *        - any analytics retrieved by the logged in user must be removed when that user logs out
+ * The GenericAction type is strictly defined so, data is returned as action.data.data and name as action.data.name
+ * name (the name of the data set that was initially requested) is not used in this entity, since all user analytics
+ * data sets are stored under the main analytics object
+ * But the name of the data set that was initially requested may be of use here later
+ *
+ * @param {object} state - containing the current entities.users.analytics state
+ * @param {object} action - containing data for each action
+ *
+ * @returns {object} containing the new entities.users.analytics state
+ */
+function analytics(state = {}, action) {
+    switch (action.type) {
+    case UserTypes.RECEIVED_USER_ANALYTICS: {
+        return {
+            ...state,
+            ...action.data.data,
+        };
+    }
+    case UserTypes.LOGOUT_SUCCESS:
+        return {};
+    default:
+        return state;
+    }
+}
+
 function currentUserId(state = '', action) {
     switch (action.type) {
     case UserTypes.RECEIVED_ME: {
@@ -365,6 +397,9 @@ function stats(state = {}, action) {
 }
 
 export default combineReducers({
+
+    // object where each type of data is defined in Datasets in constants/user_analytics.js
+    analytics,
 
     // the current selected user
     currentUserId,

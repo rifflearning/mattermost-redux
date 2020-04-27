@@ -312,6 +312,24 @@ export default class Client4 {
         );
     };
 
+    /**
+     * Get the 'name' UserAnalytics data for the specified user in the specified team
+     * from the mattermost-server. UserAnalytics are based on interactions the
+     * user had in a particular team.
+     *
+     * @param {string} userId - The target user for the requested analytics
+     * @param {string} teamId - The target team for the requested analytics
+     * @param {string} name - The name of the type of analytic data to return
+     *
+     * @returns {Promise<object>} containing the particular analytics requested
+     */
+    getUserAnalytics = async (userId, teamId, name) => {
+        return this.doFetch(
+            `${this.getUserRoute(userId)}/teams/${teamId}/useranalytics${buildQueryString({name})}`,
+            {method: 'get'}
+        );
+    };
+
     patchMe = async (userPatch) => {
         return this.doFetch(
             `${this.getUserRoute('me')}/patch`,

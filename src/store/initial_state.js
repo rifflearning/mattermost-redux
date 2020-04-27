@@ -28,6 +28,10 @@ const state: GlobalState = {
             profilesNotInChannel: {},
             statuses: {},
             stats: {},
+            analytics: {
+
+                // The key for each type of data is defined in Datasets in constants/user_analytics.js
+            },
         },
         teams: {
             currentTeamId: '',
@@ -333,6 +337,10 @@ const state: GlobalState = {
             getUser: {
                 status: 'not_started',
                 error: null,
+            },
+            getUserAnalytics: {
+
+                // The key for each type of data is defined in Datasets in constants/user_analytics.js
             },
             getUserByUsername: {
                 status: 'not_started',
