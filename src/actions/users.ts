@@ -71,6 +71,15 @@ export function createUser(user: UserProfile, token: string, inviteId: string): 
     };
 }
 
+export function createLTIUser(data: {password: string}): ActionFunc {
+    return bindClientFunc({
+        clientFunc: Client4.createLTIUser,
+        params: [
+            data,
+        ],
+    });
+}
+
 export function login(loginId: string, password: string, mfaToken = '', ldapOnly = false): ActionFunc {
     return async (dispatch: DispatchFunc, getState: GetStateFunc) => {
         dispatch({type: UserTypes.LOGIN_REQUEST, data: null});
